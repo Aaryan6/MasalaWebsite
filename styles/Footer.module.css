@@ -1,0 +1,125 @@
+.container > * {
+  color: #fff;
+}
+.container {
+  padding: 20px 40px;
+  background: #090d20;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* left */
+.left h3 {
+  font-size: 22px;
+  font-weight: 500;
+  font-family: "Reem Kufi Fun", sans-serif;
+}
+.left div {
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+}
+.left div span {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 10px;
+}
+
+/* middle */
+
+.middle {
+}
+.middle div:first-child {
+  margin-top: 60px;
+}
+.middle div:first-child span {
+  font-size: 14px;
+  margin: 0 25px;
+  color: rgba(255, 255, 255, 0.7);
+}
+.middle div:last-child {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin-top: 50px;
+}
+.middle div:last-child span {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-top: 5px;
+}
+
+/* right */
+
+.right h4 {
+  font-size: 15px;
+  font-weight: 400;
+  margin-top: 30px;
+}
+.right div {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+}
+.right div span {
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+@media screen and (max-width: 500px) {
+  .container > * {
+    color: #fff;
+  }
+  .container {
+    padding: 10px 20px;
+    background: #090d20;
+    display: flex;
+    flex-direction: column;
+  }
+  .left div {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+  }
+  .left div span {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 00px;
+  }
+  .middle {
+    display: none;
+  }
+  .middle div:first-child {
+    margin-top: 30px;
+  }
+  .middle div:first-child span {
+    font-size: 14px;
+    margin: 0 25px;
+    color: rgba(255, 255, 255, 0.7);
+  }
+  .middle div:last-child {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin-top: 50px;
+  }
+  .middle div:last-child span {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.7);
+    margin-top: 5px;
+  }
+  .right h4 {
+    font-size: 15px;
+    font-weight: 400;
+    margin-top: 30px;
+  }
+  .right div {
+    display: flex;
+    flex-direction: row;
+    text-align: left;
+  }
+  .right div span {
+    font-size: 20px;
+    margin: 0 20px 0 0;
+  }
+}

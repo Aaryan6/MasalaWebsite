@@ -1,0 +1,84 @@
+.container {
+  z-index: 999;
+}
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  background: #ee3f3f;
+  padding: 15px 20px;
+}
+.logo {
+}
+.logo span {
+  color: #fff;
+  font-family: "Reem Kufi Fun", sans-serif;
+  font-size: 18px;
+}
+.list a {
+  font-size: 15px;
+  font-weight: 300;
+}
+.page {
+  padding: 0 20px;
+  color: #fff;
+}
+.container {
+  position: sticky;
+  top: 0;
+  width: 100%;
+}
+.right {
+  color: #fff;
+  display: flex;
+  align-items: center;
+}
+.bag_icon {
+  font-size: 20px;
+}
+.menu_icon {
+  font-size: 24px;
+  display: none;
+  margin-left: 10px;
+}
+.close_icon {
+  font-size: 30px;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  z-index: 12;
+  color: #fff;
+  display: none;
+}
+
+@media screen and (max-width: 500px) {
+  .list {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
+    display: none;
+  }
+  .list a {
+    margin: 15px 0;
+    font-size: 18px;
+    text-align: center;
+  }
+  .menu_icon {
+    display: block;
+  }
+  .close_icon {
+    display: block;
+  }
+  .nav {
+    padding: 15px 10px;
+    z-index: 999;
+  }
+}

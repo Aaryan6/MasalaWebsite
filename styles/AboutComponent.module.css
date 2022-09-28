@@ -1,0 +1,117 @@
+.container {
+  padding: 20px;
+}
+.heading {
+  text-align: center;
+  margin: 0 auto;
+}
+.desc {
+  max-width: 600px;
+  text-align: center;
+  margin: 40px auto 20px;
+  font-size: 15px;
+  color: #555;
+}
+.wrapper {
+  max-width: 800px;
+  margin: 80px auto;
+  background: #fff;
+  box-shadow: 0px 5px 35px -10px #c5c5c5;
+}
+.section {
+  display: flex;
+}
+.image1,
+.image2,
+.image3 {
+  width: 50%;
+  height: 400px;
+  background-size: cover;
+  background-position: center;
+  background-image: url("../public/images/a1.jpg");
+}
+
+.image2 {
+  background-image: url("../public/images/a2.jpg");
+}
+.image3 {
+  background-image: url("../public/images/a3.jpg");
+}
+
+.content {
+  width: 50%;
+  padding: 10px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.content h3 {
+  font-weight: 500;
+  font-size: 19px;
+  margin-top: -40px;
+}
+.content p {
+  font-size: 15px;
+  line-height: 27px;
+  margin-top: 5px;
+}
+
+@media screen and (max-width: 500px) {
+  .desc {
+    max-width: 300px;
+    text-align: center;
+    margin: 40px auto 20px;
+    font-size: 13px;
+    color: #555;
+  }
+  .wrapper {
+    max-width: 800px;
+    margin: 80px auto;
+    background: #eee;
+    box-shadow: 0px 5px 35px -10px #c5c5c5;
+  }
+  .section {
+    display: flex;
+    flex-direction: column;
+    margin: 20px 0;
+    background: #fff;
+    box-shadow: 0px 5px 35px -10px #c5c5c5;
+  }
+  .section:nth-child(2) {
+    flex-direction: column-reverse !important;
+  }
+  .image1,
+  .image2,
+  .image3 {
+    width: 100%;
+    height: 300px;
+    background-size: cover;
+    background-position: center;
+    background-image: url("../public/images/a1.jpg");
+  }
+  .image2 {
+    background-image: url("../public/images/a2.jpg");
+  }
+  .image3 {
+    background-image: url("../public/images/a3.jpg");
+  }
+  .content {
+    width: 100%;
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .content h3 {
+    font-weight: 500;
+    font-size: 19px;
+    margin-top: 10px;
+  }
+  .content p {
+    font-size: 13px;
+    line-height: 20px;
+    margin-top: 0px;
+    color: rgba(0, 0, 0, 0.7);
+    padding: 10px 0;
+  }
+}
