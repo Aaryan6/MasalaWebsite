@@ -5,9 +5,13 @@
   padding: 20px 40px;
   background: #090d20;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
 }
 
+.top {
+  display: flex;
+  justify-content: space-between;
+}
 /* left */
 .left h3 {
   font-size: 22px;
@@ -29,10 +33,10 @@
 
 .middle {
 }
-.middle div:first-child {
+.middle {
   margin-top: 60px;
 }
-.middle div:first-child span {
+.middle span {
   font-size: 14px;
   margin: 0 25px;
   color: rgba(255, 255, 255, 0.7);
@@ -44,9 +48,6 @@
   margin-top: 50px;
 }
 .middle div:last-child span {
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.7);
-  margin-top: 5px;
 }
 
 /* right */
@@ -66,6 +67,17 @@
   margin-bottom: 8px;
 }
 
+.bottom {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+.bottom span {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-top: 5px;
+}
+
 @media screen and (max-width: 500px) {
   .container > * {
     color: #fff;
@@ -79,12 +91,12 @@
   .left div {
     display: flex;
     flex-direction: column;
-    margin-top: 30px;
+    margin-top: 20px;
   }
   .left div span {
     font-size: 13px;
     color: rgba(255, 255, 255, 0.7);
-    margin-bottom: 00px;
+    margin-bottom: 10px;
   }
   .middle {
     display: none;
@@ -114,12 +126,14 @@
     margin-top: 30px;
   }
   .right div {
-    display: flex;
-    flex-direction: row;
-    text-align: left;
+    flex-direction: column;
+    text-align: end;
   }
   .right div span {
     font-size: 20px;
-    margin: 0 20px 0 0;
+    margin: 5px 0px 0 0;
+  }
+  .bottom {
+    margin-top: 20px;
   }
 }

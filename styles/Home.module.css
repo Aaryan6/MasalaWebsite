@@ -3,8 +3,8 @@
   height: 80vh;
 }
 .slide {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
-    url("../public/images/bg.jpg");
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("../public/images/header_bg.png");
   background-position: center;
   background-size: cover;
   width: 100%;
@@ -15,7 +15,8 @@
   flex-direction: column;
 }
 .heading {
-  font-size: 5.2vw;
+  font-size: 5.3vw;
+  font-weight: 700;
   color: #fff;
   font-family: "Reem Kufi Fun", sans-serif;
 }
@@ -95,5 +96,4 @@
     letter-spacing: 1px;
     margin-top: 20px;
   }
-  
 }

@@ -4,46 +4,45 @@ import { BsInstagram, BsFacebook, BsLinkedin } from "react-icons/bs";
 const Footer = () => {
   return (
     <div className={styles.container}>
-      <div className={styles.left}>
-        <h3>Madhav Masaala</h3>
-        <div>
-          <span>ak.patlara@gmail.com</span>
-          <span>+91 91717 43173</span>
-          <span>Khargone, MP, India</span>
+      <div className={styles.top}>
+        <div className={styles.left}>
+          <h3>Madhav Masaala</h3>
+          <div>
+            <span>ak.patlara@gmail.com</span>
+            <span>+91 91717 43173</span>
+            <span>Khargone, MP, India</span>
+          </div>
         </div>
-      </div>
-      <div className={styles.middle}>
-        <div>
+        <div className={styles.middle}>
           <span>Home</span>
           <span>Product</span>
           <span>About us</span>
           <span>Contact us</span>
         </div>
-
-        <div>
-          <span>
-            Website service by{" "}
-            <span style={{ color: "#fff", textDecoration: "underline" }}>
-              Aaryan Patel
+        <div className={styles.right}>
+          <h4>Follow on</h4>
+          <div>
+            <span>
+              <BsInstagram />
             </span>
-            .
-          </span>
-          <span>@copyright by Madhav Masaala.</span>
+            <span>
+              <BsFacebook />
+            </span>
+            <span>
+              <BsLinkedin />
+            </span>
+          </div>
         </div>
       </div>
-      <div className={styles.right}>
-        <h4>Follow on</h4>
-        <div>
-          <span>
-            <BsInstagram />
+      <div className={styles.bottom}>
+        <span>
+          Website service by{" "}
+          <span style={{ color: "#fff", textDecoration: "underline" }}>
+            Aaryan Patel
           </span>
-          <span>
-            <BsFacebook />
-          </span>
-          <span>
-            <BsLinkedin />
-          </span>
-        </div>
+          .
+        </span>
+        <span>@copyright by Madhav Masaala.</span>
       </div>
     </div>
   );
