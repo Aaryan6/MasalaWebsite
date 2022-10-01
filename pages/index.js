@@ -28,6 +28,7 @@ export default function Home() {
       <AboutComponent />
       {/* tagline */}
       <div className={styles.bottom_line}>
+        <p>Buy 100% original masala and spices online from Madhav Masaala.</p>
         <button>Order Now</button>
       </div>
     </div>
