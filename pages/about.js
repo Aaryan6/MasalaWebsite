@@ -50,18 +50,18 @@ const About = () => {
       <div className={styles.icons}>
         <span>Follow on</span>
         <div>
-          <Link href="">
-            <a>
+          <Link>
+            <a href="https://instagram.com/ak_patlara?igshid=YmMyMTA2M2Y=">
               <BsInstagram />
             </a>
           </Link>
-          <Link href="">
-            <a>
+          <Link>
+            <a href="https://www.facebook.com/akhilesh.patidar.798278">
               <BsFacebook />
             </a>
           </Link>
-          <Link href="">
-            <a>
+          <Link>
+            <a href="https://www.linkedin.com/in/akhilesh-patidar-804619229">
               <BsLinkedin />
             </a>
           </Link>
