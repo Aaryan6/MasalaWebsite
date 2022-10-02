@@ -3,6 +3,7 @@ import Image from "next/image";
 import styles from "../styles/ProductComponent.module.css";
 import Select from "react-select";
 import { AiOutlinePlusCircle, AiOutlineMinusCircle } from "react-icons/ai";
+import Link from "next/link";
 
 const ProductComponent = () => {
   const [quantity, setQuantity] = useState(1);
@@ -37,14 +38,14 @@ const ProductComponent = () => {
             Quantity
           </label>
           <div className={styles.quantity_option}>
-            <AiOutlinePlusCircle
-              className={styles.icon}
-              onClick={() => handleQuantity("plus")}
-            />
-            <span>{quantity}</span>
             <AiOutlineMinusCircle
               className={styles.icon}
               onClick={() => handleQuantity("min")}
+            />
+            <span>{quantity}</span>
+            <AiOutlinePlusCircle
+              className={styles.icon}
+              onClick={() => handleQuantity("plus")}
             />
           </div>
           <p className={styles.desc}>
@@ -53,7 +54,9 @@ const ProductComponent = () => {
             pakistani curries to create the attractive red colour, it is also
             used in Tandoori and other barbecue marinades.
           </p>
-          <button className={styles.button}>Buy Now</button>
+          <Link href="/cart">
+            <button className={styles.button}>Buy Now</button>
+          </Link>
         </div>
       </div>
     </div>

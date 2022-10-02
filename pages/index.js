@@ -26,6 +26,7 @@ export default function Home() {
           showBullets={true}
           // showNavs={true}
           autoPlay={true}
+          autoPlayDelay={3}
           className={styles.slider_comp}
         />
         <div className={styles.header_div}>

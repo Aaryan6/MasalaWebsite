@@ -2,6 +2,7 @@ import React from "react";
 import styles from "../styles/Contactus.module.css";
 
 const Contact = () => {
+  // console.log(process.env.NEXT_PUBLIC_GMAP_APIKEY);
   return (
     <div className={styles.container}>
       <h2 className={styles.heading}>Contact us</h2>
@@ -20,6 +21,7 @@ const Contact = () => {
           </button>
         </form>
       </div>
+      {!isLoaded && <div>Loading...</div>}
     </div>
   );
 };
