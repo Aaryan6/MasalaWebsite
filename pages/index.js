@@ -2,7 +2,14 @@ import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import ProductComponent from "../components/ProductComponent";
 import AboutComponent from "../components/AboutComponent";
+import SimpleImageSlider from "react-simple-image-slider";
+
 export default function Home() {
+  const images = [
+    { url: "/images/s1.jpg" },
+    { url: "/images/s2.jpg" },
+    { url: "/images/s3.jpg" },
+  ];
   return (
     <div>
       <Head>
@@ -12,11 +19,20 @@ export default function Home() {
       </Head>
       {/* slider */}
       <div className={styles.slider}>
-        <div className={styles.slide}>
+        <SimpleImageSlider
+          width={"100%"}
+          height={"100%"}
+          images={images}
+          showBullets={true}
+          // showNavs={true}
+          autoPlay={true}
+          className={styles.slider_comp}
+        />
+        <div className={styles.header_div}>
           <span className={styles.heading}>Madhav Masaala</span>
           <p className={styles.desc}>
             Our masalas help you in enhancing the flavour & bringing
-            authenticity to your dishesh
+            authenticity to your dishes.
           </p>
           <button className={styles.button}>Order Now</button>
         </div>

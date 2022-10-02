@@ -14,15 +14,23 @@ const Navbar = () => {
         </div>
         <div className={`${styles.list} ${sideBar && styles.change_list}`}>
           <Link href="/">
-            <a className={styles.page} style={{ fontWeight: 500 }}>
+            <a
+              className={styles.page}
+              style={{ fontWeight: 500 }}
+              onClick={() => setSideBar(false)}
+            >
               Home
             </a>
           </Link>
           <Link href="/about">
-            <a className={styles.page}>About us</a>
+            <a className={styles.page} onClick={() => setSideBar(false)}>
+              About us
+            </a>
           </Link>
           <Link href="/contact">
-            <a className={styles.page}>Contact us</a>
+            <a className={styles.page} onClick={() => setSideBar(false)}>
+              Contact us
+            </a>
           </Link>
           <MdClose
             className={styles.close_icon}

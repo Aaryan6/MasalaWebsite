@@ -1,25 +1,51 @@
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import styles from "../styles/ProductComponent.module.css";
+import Select from "react-select";
+import { AiOutlinePlusCircle, AiOutlineMinusCircle } from "react-icons/ai";
 
 const ProductComponent = () => {
+  const [quantity, setQuantity] = useState(1);
+  const options = [
+    { value: "1", label: "1 kg - ₹ 250" },
+    { value: "500", label: "500 gm - ₹ 150" },
+  ];
+
+  const handleQuantity = (operation) => {
+    if (operation === "plus") {
+      setQuantity(quantity + 1);
+    } else if (operation === "min" && quantity > 0) {
+      setQuantity(quantity - 1);
+    }
+  };
   return (
     <div className={styles.container}>
       <h3 className={styles.heading}>Product</h3>
       <div className={styles.wrapper}>
         {/* image */}
-        <div className={styles.image}>
-        </div>
+        <div className={styles.image}></div>
         {/* content */}
         <div className={styles.content}>
           <span className={styles.title}>Red chill powder</span>
-          <div className={styles.box}>
-            <span className={styles.left}>Price -</span>
-            <span className={styles.right}>₹ 120</span>
-          </div>
-          <div className={styles.box}>
-            <span className={styles.left}>Quantity -</span>
-            <span className={styles.right}>500 gm</span>
+          <Select
+            options={options}
+            className={styles.select_box}
+            isSearchable={false}
+            placeholder="1 kg - ₹ 250"
+          />
+          <label htmlFor="" className={styles.label}>
+            Quantity
+          </label>
+          <div className={styles.quantity_option}>
+            <AiOutlinePlusCircle
+              className={styles.icon}
+              onClick={() => handleQuantity("plus")}
+            />
+            <span>{quantity}</span>
+            <AiOutlineMinusCircle
+              className={styles.icon}
+              onClick={() => handleQuantity("min")}
+            />
           </div>
           <p className={styles.desc}>
             This vibrant and tasty red chilli powder imparts a rich flavour and
@@ -27,7 +53,7 @@ const ProductComponent = () => {
             pakistani curries to create the attractive red colour, it is also
             used in Tandoori and other barbecue marinades.
           </p>
-          <button className={styles.button}>Check More</button>
+          <button className={styles.button}>Buy Now</button>
         </div>
       </div>
     </div>
