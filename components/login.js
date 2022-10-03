@@ -16,7 +16,7 @@ const Login = ({ setLogin }) => {
           Continue
         </button>
         <span className={styles.option}>
-          Don't have an account?{" "}
+          Don&apos;t have an account?{" "}
           <a className={styles.a} onClick={() => setLogin(false)}>
             Sign up
           </a>

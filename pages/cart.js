@@ -23,6 +23,7 @@ const Cart = () => {
                   src={"/images/catg1.png"}
                   width={"100px"}
                   height={"100px"}
+                  alt="product"
                 />
               </td>
               <td>Red chilli masaala</td>
@@ -40,6 +41,7 @@ const Cart = () => {
                 src={"/images/ordered.svg"}
                 width={"100px"}
                 height={"100px"}
+                alt="illustration1"
               />
               <span>Ordered successfully!</span>
               <div className={styles.checked_box}>
@@ -51,6 +53,7 @@ const Cart = () => {
                 src={"/images/ontheway.svg"}
                 width={"100px"}
                 height={"100px"}
+                alt="illustration2"
               />
               <span>On the way!</span>
             </div>
@@ -59,6 +62,7 @@ const Cart = () => {
                 src={"/images/reached_order.svg"}
                 width={"100px"}
                 height={"100px"}
+                alt="illustration3"
               />
               <span>Delivered Successfully!</span>
             </div>

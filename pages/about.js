@@ -31,7 +31,7 @@ const About = () => {
       <span className={styles.heading}>Madhav Masaala</span>
       <div className={styles.wrapper}>
         <div className={styles.image_con}>
-          <Image src="/images/office.jpg" width={"600px"} height={"400px"} />
+          <Image src="/images/office.jpg" width={"600px"} height={"400px"} alt="office image"/>
           <p>
             We at Madhav Masaala maintain the legacy, purity & quality to serve
             you the best of blended, grounded & assorted masalas. Our masalas
