@@ -2,15 +2,36 @@ import Image from "next/image";
 import React from "react";
 import styles from "../styles/About.module.css";
 import { BsInstagram, BsFacebook, BsLinkedin } from "react-icons/bs";
-import Link from "next/link";
+import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
+
+const center = {
+  lat: 21.833525,
+  lng: 75.61499,
+};
 
 const About = () => {
+  const { isLoaded } = useLoadScript({
+    // id: "google-map-script",
+    googleMapsApiKey: process.env.NEXT_PUBLIC_GMAP_APIKEY,
+  });
+
+  const [map, setMap] = React.useState(null);
+
+  const onLoad = React.useCallback(function callback(map) {
+    const bounds = new window.google.maps.LatLngBounds(center);
+    map.fitBounds(bounds);
+    setMap(map);
+  }, []);
+
+  const onUnmount = React.useCallback(function callback(map) {
+    setMap(null);
+  }, []);
   return (
     <div className={styles.container}>
       <span className={styles.heading}>Madhav Masaala</span>
       <div className={styles.wrapper}>
         <div className={styles.image_con}>
-          <Image src="/images/office.jpg" width={"600px"} height={"400px"} />
+          <Image src="/images/office.jpg" width={"600px"} height={"400px"} alt="office image"/>
           <p>
             We at Madhav Masaala maintain the legacy, purity & quality to serve
             you the best of blended, grounded & assorted masalas. Our masalas
@@ -50,21 +71,17 @@ const About = () => {
       <div className={styles.icons}>
         <span>Follow on</span>
         <div>
-          <Link>
-            <a href="https://instagram.com/ak_patlara?igshid=YmMyMTA2M2Y=">
-              <BsInstagram />
-            </a>
-          </Link>
-          <Link>
-            <a href="https://www.facebook.com/akhilesh.patidar.798278">
-              <BsFacebook />
-            </a>
-          </Link>
-          <Link>
-            <a href="https://www.linkedin.com/in/akhilesh-patidar-804619229">
-              <BsLinkedin />
-            </a>
-          </Link>
+          <a href="https://instagram.com/ak_patlara?igshid=YmMyMTA2M2Y=">
+            <BsInstagram />
+          </a>
+
+          <a href="https://www.facebook.com/akhilesh.patidar.798278">
+            <BsFacebook />
+          </a>
+
+          <a href="https://www.linkedin.com/in/akhilesh-patidar-804619229">
+            <BsLinkedin />
+          </a>
         </div>
       </div>
       <div className={styles.bottom_line}>
@@ -73,6 +90,20 @@ const About = () => {
           Buy 100% Original Masala and spices online from Madhav Masaala.
         </span>
       </div>
+      {isLoaded ? (
+        <GoogleMap
+          center={center}
+          zoom={19}
+          onLoad={onLoad}
+          onUnmount={onUnmount}
+          mapContainerClassName={styles.mapContainer}
+        >
+          {/* Child components, such as markers, info windows, etc. */}
+          <Marker position={{ lat: 21.833525, lng: 75.61499 }} />
+        </GoogleMap>
+      ) : (
+        <div>Loading...</div>
+      )}
     </div>
   );
 };

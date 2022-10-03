@@ -1,13 +1,5 @@
 .container {
-  padding: 30px 10px;
-}
-.heading {
-  text-align: center;
-  margin: 0 auto;
-}
-.heading span {
-  font-weight: 600;
-  font-size: 20px;
+  padding: 10px 10px 30px;
 }
 .wrapper {
   display: flex;

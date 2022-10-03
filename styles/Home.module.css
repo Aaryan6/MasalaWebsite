@@ -56,6 +56,10 @@
   color: #fff;
   letter-spacing: 1px;
 }
+.section_heading {
+  text-align: center;
+  margin: 40px auto 0;
+}
 
 @media screen and (max-width: 500px) {
   .slider {
