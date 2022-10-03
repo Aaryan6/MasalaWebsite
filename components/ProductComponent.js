@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Image from "next/image";
 import styles from "../styles/ProductComponent.module.css";
 import Select from "react-select";
 import { AiOutlinePlusCircle, AiOutlineMinusCircle } from "react-icons/ai";
@@ -8,8 +7,8 @@ import Link from "next/link";
 const ProductComponent = () => {
   const [quantity, setQuantity] = useState(1);
   const options = [
-    { value: "1", label: "1 kg - ₹ 250" },
-    { value: "500", label: "500 gm - ₹ 150" },
+    { value: "1", label: "1 kg - ₹ 240" },
+    { value: "500", label: "500 gm - ₹ 120" },
   ];
 
   const handleQuantity = (operation) => {
@@ -21,7 +20,6 @@ const ProductComponent = () => {
   };
   return (
     <div className={styles.container}>
-      <h3 className={styles.heading}>Product</h3>
       <div className={styles.wrapper}>
         {/* image */}
         <div className={styles.image}></div>
@@ -32,7 +30,7 @@ const ProductComponent = () => {
             options={options}
             className={styles.select_box}
             isSearchable={false}
-            placeholder="1 kg - ₹ 250"
+            placeholder="1 kg - ₹ 240"
           />
           <label htmlFor="" className={styles.label}>
             Quantity
