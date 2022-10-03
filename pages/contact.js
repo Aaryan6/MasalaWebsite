@@ -21,7 +21,6 @@ const Contact = () => {
           </button>
         </form>
       </div>
-      {!isLoaded && <div>Loading...</div>}
     </div>
   );
 };
