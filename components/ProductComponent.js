@@ -21,7 +21,6 @@ const ProductComponent = () => {
   };
   return (
     <div className={styles.container}>
-      <h3 className={styles.heading}>Product</h3>
       <div className={styles.wrapper}>
         {/* image */}
         <div className={styles.image}></div>

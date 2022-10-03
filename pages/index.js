@@ -3,10 +3,11 @@ import styles from "../styles/Home.module.css";
 import ProductComponent from "../components/ProductComponent";
 import AboutComponent from "../components/AboutComponent";
 import SimpleImageSlider from "react-simple-image-slider";
+import Link from "next/link";
 
 export default function Home() {
   const images = [
-    { url: "/images/s1.jpg" },
+    { url: "/images/s1.png" },
     { url: "/images/s2.jpg" },
     { url: "/images/s3.jpg" },
   ];
@@ -35,18 +36,23 @@ export default function Home() {
             Our masalas help you in enhancing the flavour & bringing
             authenticity to your dishes.
           </p>
-          <button className={styles.button}>Order Now</button>
+          <Link href="/product">
+            <button className={styles.button}>Order Now</button>
+          </Link>
         </div>
       </div>
 
       {/* product */}
+      <h3 className={styles.section_heading}>Product</h3>
       <ProductComponent />
       {/* about us */}
       <AboutComponent />
       {/* tagline */}
       <div className={styles.bottom_line}>
         <p>Buy 100% original masala and spices online from Madhav Masaala.</p>
-        <button>Order Now</button>
+        <Link href="/product">
+          <button>Order Now</button>
+        </Link>
       </div>
     </div>
   );

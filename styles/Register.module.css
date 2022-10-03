@@ -1,0 +1,58 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 350px;
+}
+.logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ee3f3f;
+  margin-bottom: 0px;
+}
+.form {
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  width: 100%;
+}
+.input {
+  padding: 10px;
+  font-size: 15px;
+  outline: none;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  flex: 1;
+  margin: 10px 0;
+}
+.button {
+  padding: 10px;
+  font-size: 15px;
+  outline: none;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background: #ee3f3f;
+  color: #fff;
+  margin-top: 10px;
+  cursor: pointer;
+}
+.option {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 500;
+  margin: 10px 0 0 1px;
+}
+.a {
+  margin-left: 10px;
+  color: blue;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 500px) {
+  .container {
+    max-width: 350px;
+  }
+}

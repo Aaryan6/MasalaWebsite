@@ -1,7 +1,30 @@
 import React from "react";
 import styles from "../styles/Contactus.module.css";
+import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
+
+const center = {
+  lat: 21.833525,
+  lng: 75.61499,
+};
 
 const Contact = () => {
+  const { isLoaded } = useLoadScript({
+    // id: "google-map-script",
+    googleMapsApiKey: process.env.NEXT_PUBLIC_GMAP_APIKEY,
+  });
+
+  const [map, setMap] = React.useState(null);
+
+  const onLoad = React.useCallback(function callback(map) {
+    const bounds = new window.google.maps.LatLngBounds(center);
+    map.fitBounds(bounds);
+    setMap(map);
+  }, []);
+
+  const onUnmount = React.useCallback(function callback(map) {
+    setMap(null);
+  }, []);
+
   // console.log(process.env.NEXT_PUBLIC_GMAP_APIKEY);
   return (
     <div className={styles.container}>
@@ -21,7 +44,20 @@ const Contact = () => {
           </button>
         </form>
       </div>
-      {!isLoaded && <div>Loading...</div>}
+      {isLoaded ? (
+        <GoogleMap
+          center={center}
+          zoom={19}
+          onLoad={onLoad}
+          onUnmount={onUnmount}
+          mapContainerClassName={styles.mapContainer}
+        >
+          {/* Child components, such as markers, info windows, etc. */}
+          <Marker position={{ lat: 21.833525, lng: 75.61499 }} />
+        </GoogleMap>
+      ) : (
+        <div>Loading...</div>
+      )}
     </div>
   );
 };
