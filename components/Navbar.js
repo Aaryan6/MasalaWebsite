@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../styles/Navbar.module.css";
 import { BsHandbag } from "react-icons/bs";
 import { AiOutlineMenu } from "react-icons/ai";
@@ -8,6 +8,8 @@ import { CgProfile } from "react-icons/cg";
 import Modal from "react-modal";
 import Login from "./Login";
 import Register from "./Register";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const customStyles = {
   content: {
@@ -24,7 +26,14 @@ const Navbar = () => {
   const [sideBar, setSideBar] = useState(false);
   const [modalIsOpen, setIsOpen] = useState(false);
   const [login, setLogin] = useState(true);
+  const [user, setUser] = useState();
 
+  useEffect(() => {
+    const getUser = async () => {
+      await setUser(JSON.parse(localStorage.getItem("masaala_user")));
+    };
+    getUser();
+  }, []);
   function openModal() {
     setIsOpen(true);
   }
@@ -34,6 +43,17 @@ const Navbar = () => {
   }
   return (
     <div className={styles.container}>
+      <ToastContainer
+        position="top-center"
+        autoClose={1500}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <Modal
         isOpen={modalIsOpen}
         // onAfterOpen={afterOpenModal}
@@ -42,9 +62,9 @@ const Navbar = () => {
         contentLabel="Example Modal"
       >
         {login ? (
-          <Login setLogin={setLogin} />
+          <Login setLogin={setLogin} closeModal={closeModal} />
         ) : (
-          <Register setLogin={setLogin} />
+          <Register setLogin={setLogin} closeModal={closeModal} />
         )}
       </Modal>
       <div className={styles.nav}>
@@ -83,12 +103,14 @@ const Navbar = () => {
         </div>
         <div className={styles.right}>
           <Link href="/cart">
-            <BsHandbag className={styles.bag_icon} />
+            <span className={styles.icon_div}>
+              <BsHandbag className={styles.bag_icon} />
+            </span>
           </Link>
           <div className={styles.hover}>
             <CgProfile className={styles.profile_icon} onClick={openModal} />
             <div className={styles.dropdown_menu}>
-              <span>Username</span>
+              <span>{user?.name}</span>
               <span>Logout</span>
             </div>
           </div>

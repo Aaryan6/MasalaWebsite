@@ -18,7 +18,7 @@
   font-weight: 600;
 }
 .list {
-  flex-basis: 30%;
+  width: 450px;
   display: flex;
   justify-content: space-between;
 }
@@ -40,6 +40,10 @@
   display: flex;
   align-items: center;
   position: relative;
+}
+.icon_div {
+  display: flex;
+  align-items: center;
 }
 .bag_icon {
   font-size: 20px;

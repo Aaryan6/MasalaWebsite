@@ -1,14 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "../styles/ProductComponent.module.css";
 import Select from "react-select";
 import { AiOutlinePlusCircle, AiOutlineMinusCircle } from "react-icons/ai";
 import Link from "next/link";
+import axios from "axios";
 
-const ProductComponent = () => {
+const ProductComponent = ({ product }) => {
   const [quantity, setQuantity] = useState(1);
+  const [value, setValue] = useState({
+    value: product?.weight[1],
+    label: "1 kg - ₹ 240",
+  });
   const options = [
-    { value: "1", label: "1 kg - ₹ 240" },
-    { value: "500", label: "500 gm - ₹ 120" },
+    { value: product?.weight[1], label: "1 kg - ₹ 240" },
+    { value: product?.weight[0], label: "500 gm - ₹ 120" },
   ];
 
   const handleQuantity = (operation) => {
@@ -18,19 +23,37 @@ const ProductComponent = () => {
       setQuantity(quantity - 1);
     }
   };
+
+  const bookOrder = async () => {
+    const postOrder = await axios.post("http://localhost:3000/api/order", {
+      userId: "1234user",
+      products: [
+        {
+          productId: "1234prduct",
+          quantity: quantity,
+          weight: 500,
+        },
+      ],
+      address: "earth",
+      totalPrice: quantity * product?.price,
+    });
+    console.log(postOrder);
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
-        {/* image */}
         <div className={styles.image}></div>
-        {/* content */}
         <div className={styles.content}>
-          <span className={styles.title}>Red chill powder</span>
+          <span className={styles.title}>{product?.name}</span>
           <Select
             options={options}
             className={styles.select_box}
             isSearchable={false}
             placeholder="1 kg - ₹ 240"
+            getOptionValue={(e) => setValue(e)}
+            value={value}
+            instanceId="select_box"
           />
           <label htmlFor="" className={styles.label}>
             Quantity
@@ -53,7 +76,9 @@ const ProductComponent = () => {
             used in Tandoori and other barbecue marinades.
           </p>
           <Link href="/cart">
-            <button className={styles.button}>Buy Now</button>
+            <button className={styles.button} onClick={bookOrder}>
+              Buy Now
+            </button>
           </Link>
         </div>
       </div>

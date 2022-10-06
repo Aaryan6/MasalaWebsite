@@ -1,18 +1,64 @@
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
 import styles from "../styles/Register.module.css";
+import { toast } from "react-toastify";
 
-const Login = ({ setLogin }) => {
+const Login = ({ setLogin, closeModal }) => {
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const handleLogin = async () => {
+    try {
+      const newUser = await axios.post("/api/userLogin", {
+        email: email,
+        password: password,
+      });
+      localStorage.setItem("masaala_user", JSON.stringify(newUser.data.user));
+      if (newUser.data.success) {
+        toast.success("Successfully logged in!", {
+          position: "top-center",
+          autoClose: 1500,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        closeModal();
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong!", {
+        position: "top-center",
+        autoClose: 1500,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  };
   return (
     <div className={styles.container}>
       <span className={styles.logo}>Login</span>
       <div className={styles.form}>
-        <input type="email" className={styles.input} placeholder="Email" />
+        <input
+          type="email"
+          className={styles.input}
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
         <input
           type="password"
           className={styles.input}
-          placeholder="Password"
+          placeholder="Password (at least 6 character)"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
         />
-        <button type="submit" className={styles.button}>
+        <button type="submit" className={styles.button} onClick={handleLogin}>
           Continue
         </button>
         <span className={styles.option}>

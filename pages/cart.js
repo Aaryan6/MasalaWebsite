@@ -1,36 +1,58 @@
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../styles/Cart.module.css";
 import { BsCheckCircle } from "react-icons/bs";
+import axios from "axios";
 
-const Cart = () => {
+const Cart = ({ orders }) => {
+  const [user, setUser] = useState();
+  const [userOrders, setUserOrders] = useState([]);
+  useEffect(() => {
+    // do {
+    getOrders();
+    // } while (userOrders.length < 1);
+    getUser();
+    console.log(userOrders);
+  }, []);
+  const getUser = async () => {
+    await setUser(JSON.parse(localStorage.getItem("masaala_user")));
+  };
+  const getOrders = async () => {
+    await setUserOrders(orders.filter((order) => order.userId === user?._id));
+  };
   return (
     <div className={styles.container}>
       <div className={styles.left_div}>
         <div className={styles.selected_products}>
           <h3>Selected Product</h3>
           <table>
-            <tr className={styles.product_row}>
-              <th>Image</th>
-              <th>Name</th>
-              <th>Weight</th>
-              <th>Quantity</th>
-              <th>Price</th>
-            </tr>
-            <tr className={styles.product_row}>
-              <td>
-                <Image
-                  src={"/images/catg1.png"}
-                  width={"100px"}
-                  height={"100px"}
-                  alt="product"
-                />
-              </td>
-              <td>Red chilli masaala</td>
-              <td>1 kg</td>
-              <td>2 packs.</td>
-              <td>₹ 124</td>
-            </tr>
+            <tbody>
+              <tr className={styles.product_row}>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Weight</th>
+                <th>Quantity</th>
+                <th>Price</th>
+              </tr>
+              {userOrders.map((item) => {
+                return (
+                  <tr className={styles.product_row} key={item._id}>
+                    <td>
+                      <Image
+                        src={"/images/catg1.png"}
+                        width={"100px"}
+                        height={"100px"}
+                        alt="product"
+                      />
+                    </td>
+                    <td>{item.products[0].productName}</td>
+                    <td>{item.products[0].weight} gm</td>
+                    <td>{item.products[0].quantity} packs.</td>
+                    <td>₹ {item.totalPrice}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
           </table>
         </div>
         <div className={styles.delivery_info}>
@@ -94,5 +116,15 @@ const Cart = () => {
     </div>
   );
 };
+
+export async function getServerSideProps() {
+  const res = await axios.get("http://localhost:3000/api/order");
+  const orders = res.data;
+  return {
+    props: {
+      orders,
+    }, // will be passed to the page component as props
+  };
+}
 
 export default Cart;
