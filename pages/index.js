@@ -4,7 +4,6 @@ import ProductComponent from "../components/ProductComponent";
 import AboutComponent from "../components/AboutComponent";
 import SimpleImageSlider from "react-simple-image-slider";
 import Link from "next/link";
-import { useEffect } from "react";
 import axios from "axios";
 
 export default function Home({ product }) {
@@ -13,10 +12,6 @@ export default function Home({ product }) {
     { url: "/images/s2.png" },
     { url: "/images/s3.jpg" },
   ];
-
-  useEffect(() => {
-    // console.log(props.data);
-  }, []);
   return (
     <div>
       <Head>
@@ -66,7 +61,7 @@ export default function Home({ product }) {
   );
 }
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps() {
   const res = await axios.get("http://localhost:3000/api/product");
   const product = res.data;
   return {
