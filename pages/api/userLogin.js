@@ -1,5 +1,6 @@
 import dbConnect from "../../dbConnect";
 import User from "../../models/User";
+let CryptoJS = require("crypto-js");
 
 dbConnect();
 
@@ -13,10 +14,21 @@ export default async function handlerUserLogin(req, res) {
       try {
         const isUser = await User.findOne({ email: req.body.email });
         if (isUser) {
-          if (isUser.password == req.body.password) {
+          let cryptPassword = CryptoJS.AES.decrypt(
+            isUser.password,
+            "GUPTCODE123"
+          );
+          console.log(cryptPassword);
+          let plainPassword = cryptPassword.toString(CryptoJS.enc.Utf8);
+          console.log(plainPassword);
+          if (plainPassword == req.body.password) {
             res.status(200).json({
               message: "successfully logged in",
-              user: isUser,
+              user: {
+                _id: isUser._id,
+                name: isUser.name,
+                email: isUser.email,
+              },
               success: true,
             });
           } else {

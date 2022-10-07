@@ -7,10 +7,16 @@ import axios from "axios";
 
 const ProductComponent = ({ product }) => {
   const [quantity, setQuantity] = useState(1);
+  const [user, setUser] = useState();
   const [value, setValue] = useState({
     value: product?.weight[1],
     label: "1 kg - ₹ 240",
   });
+
+  useEffect(() => {
+    setUser(JSON.parse(localStorage.getItem("masaala_user")));
+  }, []);
+
   const options = [
     { value: product?.weight[1], label: "1 kg - ₹ 240" },
     { value: product?.weight[0], label: "500 gm - ₹ 120" },
@@ -19,27 +25,30 @@ const ProductComponent = ({ product }) => {
   const handleQuantity = (operation) => {
     if (operation === "plus") {
       setQuantity(quantity + 1);
-    } else if (operation === "min" && quantity > 0) {
+    } else if (operation === "min" && quantity > 1) {
       setQuantity(quantity - 1);
     }
   };
 
   const bookOrder = async () => {
     const postOrder = await axios.post("http://localhost:3000/api/order", {
-      userId: "1234user",
+      userId: user._id,
       products: [
         {
-          productId: "1234prduct",
+          productId: product._id,
+          productName: product?.name,
+          price: value.value == 1000 ? 2 * product?.price : product?.price,
           quantity: quantity,
-          weight: 500,
+          weight: value.value,
         },
       ],
       address: "earth",
-      totalPrice: quantity * product?.price,
+      totalPrice:
+        value.value == 500
+          ? quantity * product?.price
+          : quantity * 2 * product?.price,
     });
-    console.log(postOrder);
   };
-
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
@@ -51,9 +60,9 @@ const ProductComponent = ({ product }) => {
             className={styles.select_box}
             isSearchable={false}
             placeholder="1 kg - ₹ 240"
-            getOptionValue={(e) => setValue(e)}
             value={value}
-            instanceId="select_box"
+            onChange={(option) => setValue(option)}
+            instanceId={value.value}
           />
           <label htmlFor="" className={styles.label}>
             Quantity

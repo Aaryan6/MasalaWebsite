@@ -2,17 +2,19 @@ import axios from "axios";
 import React, { useState } from "react";
 import styles from "../styles/Register.module.css";
 import { toast } from "react-toastify";
+import { useRouter } from "next/router";
 
 const Login = ({ setLogin, closeModal }) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const router = useRouter();
+
   const handleLogin = async () => {
     try {
       const newUser = await axios.post("/api/userLogin", {
         email: email,
         password: password,
       });
-      localStorage.setItem("masaala_user", JSON.stringify(newUser.data.user));
       if (newUser.data.success) {
         toast.success("Successfully logged in!", {
           position: "top-center",
@@ -23,7 +25,9 @@ const Login = ({ setLogin, closeModal }) => {
           draggable: true,
           progress: undefined,
         });
+        localStorage.setItem("masaala_user", JSON.stringify(newUser.data.user));
         closeModal();
+        router.reload();
       }
     } catch (error) {
       console.log(error);

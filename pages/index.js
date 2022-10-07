@@ -7,7 +7,7 @@ import Link from "next/link";
 import { useEffect } from "react";
 import axios from "axios";
 
-export default function Home(props) {
+export default function Home({ product }) {
   const images = [
     { url: "/images/s1.jpg" },
     { url: "/images/s2.png" },
@@ -50,14 +50,16 @@ export default function Home(props) {
 
       {/* product */}
       <h3 className={styles.section_heading}>Product</h3>
-      <ProductComponent />
+      <ProductComponent product={product} />
       {/* about us */}
       <AboutComponent />
       {/* tagline */}
       <div className={styles.bottom_line}>
         <p>Buy 100% original masala and spices online from Madhav Masaala.</p>
         <Link href="/product">
-          <button>Order Now</button>
+          <a>
+            <button>Order Now</button>
+          </a>
         </Link>
       </div>
     </div>
@@ -66,10 +68,10 @@ export default function Home(props) {
 
 export async function getServerSideProps(context) {
   const res = await axios.get("http://localhost:3000/api/product");
-  const data = res.data;
+  const product = res.data;
   return {
     props: {
-      data,
+      product: product[0],
     }, // will be passed to the page component as props
   };
 }

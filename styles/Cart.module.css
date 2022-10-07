@@ -2,6 +2,7 @@
   display: flex;
   padding: 2rem;
   background: #fdfdfd;
+  /* flex-direction: column; */
 }
 .left_div {
   flex-basis: 70%;
@@ -14,7 +15,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 90%;
+  width: 100%;
   margin: 10px 0 20px;
 }
 .product_row th {
@@ -24,6 +25,14 @@
 .product_row td {
   text-align: center;
   width: 100%;
+}
+.cancelButton {
+  border: none;
+  padding: 8px 15px;
+  background: #f5cf5f;
+  font-size: 13px;
+  cursor: pointer;
+  font-weight: 500;
 }
 .illu_row {
   display: flex;
@@ -80,8 +89,8 @@
   background: #fff;
   box-shadow: 0 4px 20px -10px rgba(0, 0, 0, 0.5);
   padding: 10px 20px 20px;
-  width: 320px;
-  margin: 0 auto;
+  width: 90%;
+  margin: 1rem auto;
 }
 .pay_box .title {
   margin-bottom: 20px;
@@ -89,7 +98,7 @@
 .pay_box .row {
   display: flex;
   justify-content: space-between;
-  margin: 10px 0;
+  margin: 20px 0;
 }
 .pay_box .row span {
   font-size: 15px;
@@ -112,7 +121,7 @@
     padding: 1rem;
   }
   .pay_box {
-    margin: 1rem 0;
+    margin: 1rem;
   }
   .product_row {
     width: 100%;

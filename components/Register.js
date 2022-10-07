@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import styles from "../styles/Register.module.css";
@@ -8,6 +9,8 @@ const Register = ({ setLogin, closeModal }) => {
   const [email, setEmail] = useState();
   const [number, setNumber] = useState();
   const [password, setPassword] = useState();
+  const router = useRouter();
+
   const handleRegister = async () => {
     try {
       const newUser = await axios.post("/api/userRegister", {
@@ -27,7 +30,9 @@ const Register = ({ setLogin, closeModal }) => {
           draggable: true,
           progress: undefined,
         });
+        localStorage.setItem("masaala_user", JSON.stringify(newUser.data.user));
         closeModal();
+        router.reload();
       }
     } catch (error) {
       console.log(error);
