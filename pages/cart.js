@@ -15,7 +15,7 @@ const Cart = () => {
     if (!JSON.parse(localStorage.getItem("masaala_user"))) {
       router.push("/");
     }
-  }, []);
+  }, [router]);
   const getOrders = async () => {
     const res = await axios.get(
       `http://localhost:3000/api/order?userId=${
