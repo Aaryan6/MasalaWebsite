@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import axios from "axios";
 import ProductComponent from "../components/ProductComponent";
 
@@ -9,7 +9,9 @@ const Product = ({ product }) => {
 export default Product;
 
 export async function getServerSideProps() {
-  const res = await axios.get("http://localhost:3000/api/product");
+  const res = await axios.get(
+    `${process.env.NEXT_PUBLIC_HOST_NAME}/api/product`
+  );
   const product = res.data;
   return {
     props: {

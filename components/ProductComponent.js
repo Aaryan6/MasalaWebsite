@@ -31,7 +31,7 @@ const ProductComponent = ({ product }) => {
   };
 
   const bookOrder = async () => {
-    const postOrder = await axios.post("http://localhost:3000/api/order", {
+    const postOrder = await axios.post("/api/order", {
       userId: user._id,
       products: [
         {

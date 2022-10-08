@@ -18,7 +18,7 @@ const Cart = () => {
   }, [router]);
   const getOrders = async () => {
     const res = await axios.get(
-      `http://localhost:3000/api/order?userId=${
+      `${process.env.NEXT_PUBLIC_HOST_NAME}/api/order?userId=${
         JSON.parse(localStorage.getItem("masaala_user"))?._id
       }`
     );
@@ -32,7 +32,9 @@ const Cart = () => {
   };
 
   const deleteOrder = async (id) => {
-    await axios.delete(`http://localhost:3000/api/order?orderId=${id}`);
+    await axios.delete(
+      `${process.env.NEXT_PUBLIC_HOST_NAME}/api/order?orderId=${id}`
+    );
     getOrders();
   };
   return (
@@ -149,7 +151,7 @@ function deliveryFunc() {
 }
 
 export async function getServerSideProps() {
-  const res = await axios.get("http://localhost:3000/api/order");
+  const res = await axios.get(`${process.env.NEXT_PUBLIC_HOST_NAME}api/order`);
   const orders = res.data;
   return {
     props: {
