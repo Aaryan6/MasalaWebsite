@@ -38,7 +38,7 @@ const Footer = () => {
       <div className={styles.bottom}>
         <span>
           Website service by{" "}
-          <a href="https://codewithaaryan.netlify.com" target={"_blank"}>
+          <a href="https://codewithaaryan.netlify.com">
             <span style={{ color: "#fff", textDecoration: "underline" }}>
               Aaryan Patel
             </span>
