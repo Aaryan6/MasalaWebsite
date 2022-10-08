@@ -3,6 +3,7 @@
   padding: 2rem;
   background: #fdfdfd;
   /* flex-direction: column; */
+  min-height: 70vh;
 }
 .left_div {
   flex-basis: 70%;

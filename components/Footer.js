@@ -37,7 +37,7 @@ const Footer = () => {
       </div>
       <div className={styles.bottom}>
         <span>
-          Website service by
+          Website service by{" "}
           <a href="https://codewithaaryan.netlify.com" target={"_blank"}>
             <span style={{ color: "#fff", textDecoration: "underline" }}>
               Aaryan Patel
@@ -45,7 +45,6 @@ const Footer = () => {
           </a>
           .
         </span>
-        <span>@copyright by Madhav Masaala.</span>
       </div>
     </div>
   );
