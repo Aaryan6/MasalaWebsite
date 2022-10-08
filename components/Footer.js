@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "../styles/Footer.module.css";
 import { BsInstagram, BsFacebook, BsLinkedin } from "react-icons/bs";
+import Link from "next/link";
 const Footer = () => {
   return (
     <div className={styles.container}>
@@ -36,10 +37,12 @@ const Footer = () => {
       </div>
       <div className={styles.bottom}>
         <span>
-          Website service by{" "}
-          <span style={{ color: "#fff", textDecoration: "underline" }}>
-            Aaryan Patel
-          </span>
+          Website service by
+          <a href="https://codewithaaryan.netlify.com" target={"_blank"}>
+            <span style={{ color: "#fff", textDecoration: "underline" }}>
+              Aaryan Patel
+            </span>
+          </a>
           .
         </span>
         <span>@copyright by Madhav Masaala.</span>

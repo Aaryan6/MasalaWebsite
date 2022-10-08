@@ -2,30 +2,8 @@ import Image from "next/image";
 import React from "react";
 import styles from "../styles/About.module.css";
 import { BsInstagram, BsFacebook, BsLinkedin } from "react-icons/bs";
-import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
-
-const center = {
-  lat: 21.833525,
-  lng: 75.61499,
-};
 
 const About = () => {
-  const { isLoaded } = useLoadScript({
-    // id: "google-map-script",
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GMAP_APIKEY,
-  });
-
-  const [map, setMap] = React.useState(null);
-
-  const onLoad = React.useCallback(function callback(map) {
-    const bounds = new window.google.maps.LatLngBounds(center);
-    map.fitBounds(bounds);
-    setMap(map);
-  }, []);
-
-  const onUnmount = React.useCallback(function callback(map) {
-    setMap(null);
-  }, []);
   return (
     <div className={styles.container}>
       <span className={styles.heading}>Madhav Masaala</span>
@@ -95,20 +73,6 @@ const About = () => {
           Buy 100% Original Masala and spices online from Madhav Masaala.
         </span>
       </div>
-      {isLoaded ? (
-        <GoogleMap
-          center={center}
-          zoom={19}
-          onLoad={onLoad}
-          onUnmount={onUnmount}
-          mapContainerClassName={styles.mapContainer}
-        >
-          {/* Child components, such as markers, info windows, etc. */}
-          <Marker position={{ lat: 21.833525, lng: 75.61499 }} />
-        </GoogleMap>
-      ) : (
-        <div>Loading...</div>
-      )}
     </div>
   );
 };
