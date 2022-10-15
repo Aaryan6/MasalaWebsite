@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import styles from "../styles/ProductComponent.module.css";
 import Select from "react-select";
 import { AiOutlinePlusCircle, AiOutlineMinusCircle } from "react-icons/ai";
-import Link from "next/link";
 import axios from "axios";
 import { loadStripe } from "@stripe/stripe-js";
 import { useRouter } from "next/router";
@@ -76,6 +75,7 @@ const ProductComponent = ({ product }) => {
       console.log(res.data);
       // add order to redux
       dispatch(addOrder(res.data));
+      router.push("/cart");
     } catch (err) {
       console.log(err);
     }

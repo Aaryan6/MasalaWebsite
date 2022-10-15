@@ -5,19 +5,13 @@ export default async function handler(req, res) {
     try {
       // Create Checkout Sessions from body params.
       const session = await stripe.checkout.sessions.create({
-        // line_items: [
-        //   {
-        //     // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-        //     price: req.body.price_ID,
-        //     quantity: req.body.quantity,
-        //   },
-        // ],
         line_items: req?.body?.items ?? [],
         mode: "payment",
-        success_url: `${req.headers.origin}/?success=true`,
+        payment_method_types: ["card"],
+        success_url: `${req.headers.origin}/success?session_id={CHECKOUT_SESSION_ID}`,
         cancel_url: `${req.headers.origin}/?canceled=true`,
       });
-      res.status(200).json(session.url);
+      res.status(200).json(session);
     } catch (err) {
       res.status(err.statusCode || 500).json(err.message);
     }
