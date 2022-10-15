@@ -7,10 +7,7 @@ const Success = () => {
     query: { session_id },
   } = useRouter();
 
-  const { data, error } = useSWR(
-    () => `/api/checkout_sessions/${session_id}`,
-    fetcher
-  );
+  const { data, error } = useSWR(() => `/api/checkout_sessions/${session_id}`);
 
   useEffect(() => {
     if (data) {
