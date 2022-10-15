@@ -8,6 +8,10 @@ const OrderSchema = mongoose.Schema(
     },
     products: [
       {
+        price_Id: {
+          type: String,
+          required: true,
+        },
         productId: {
           type: String,
           required: true,
@@ -32,6 +36,7 @@ const OrderSchema = mongoose.Schema(
     ],
     address: {
       type: String,
+      required: true,
     },
     totalPrice: {
       type: Number,

@@ -9,17 +9,22 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.8.6",
+    "@stripe/stripe-js": "^1.41.0",
     "axios": "^0.27.2",
     "crypto-js": "^4.1.1",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.6.4",
     "next": "12.3.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.4.0",
     "react-modal": "^3.15.1",
+    "react-redux": "^8.0.4",
     "react-select": "^5.4.0",
     "react-simple-image-slider": "^2.4.1",
-    "react-toastify": "^9.0.8"
+    "react-toastify": "^9.0.8",
+    "stripe": "^10.13.0"
   },
   "devDependencies": {
     "eslint": "8.24.0",

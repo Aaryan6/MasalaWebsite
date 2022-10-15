@@ -1,5 +1,6 @@
 import dbConnect from "../../dbConnect";
 import User from "../../models/User";
+import jwt from "jsonwebtoken";
 let CryptoJS = require("crypto-js");
 
 dbConnect();
@@ -16,7 +17,7 @@ export default async function handlerUserRegister(req, res) {
         if (!isUser) {
           var hashPassword = CryptoJS.AES.encrypt(
             req.body.password,
-            "GUPTCODE123"
+            process.env.NEXT_PUBLIC_PASSWORD_CRYPTO_KEY
           ).toString();
           const newUser = await new User({
             name: req.body.name,
@@ -27,11 +28,14 @@ export default async function handlerUserRegister(req, res) {
           await newUser.save();
           res.status(201).json({
             message: "successfully signup up",
-            user: {
-              _id: newUser._id,
-              name: newUser.name,
-              email: newUser.email,
-            },
+            user_token: jwt.sign(
+              {
+                _id: newUser._id,
+                name: newUser.name,
+                email: newUser.email,
+              },
+              process.env.NEXT_PUBLIC_JWT_TOKEN_KEY
+            ),
             success: true,
           });
         } else {

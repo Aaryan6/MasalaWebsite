@@ -1,42 +1,55 @@
-import Image from "next/image";
 import React, { useEffect, useState } from "react";
+import Image from "next/image";
 import styles from "../styles/Cart.module.css";
 import { BsCheckCircle } from "react-icons/bs";
-import axios from "axios";
 import { useRouter } from "next/router";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { removeOrder } from "../redux/reduxSlice";
+
 const Cart = () => {
-  const [userOrders, setUserOrders] = useState([]);
-  const [totalAmount, setTotalAmount] = useState(0);
   const [discount, setDiscount] = useState(0);
   const router = useRouter();
-  useEffect(() => {
-    getOrders();
+  const dispatch = useDispatch();
+  const orders = useSelector((state) => state.order.orders);
+  const totalPrice = useSelector((state) => state.order.totalPrice);
+  const user = useSelector((state) => state.order.user);
 
-    if (!JSON.parse(localStorage.getItem("masaala_user"))) {
+  useEffect(() => {
+    if (user === null) {
       router.push("/");
     }
   }, [router]);
-  const getOrders = async () => {
-    const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_HOST_NAME}/api/order?userId=${
-        JSON.parse(localStorage.getItem("masaala_user"))?._id
-      }`
-    );
-    setUserOrders(res.data);
-    let i;
-    let price = 0;
-    for (i in res.data) {
-      price = price + res.data[i]?.totalPrice;
+
+  // delete order item from mongodb
+  const deleteOrder = async (id) => {
+    try {
+      const del = await axios.delete(
+        `${process.env.NEXT_PUBLIC_HOST_NAME}/api/order?orderId=${id}`
+      );
+      // delete order from redux state
+      if (del.data.success) {
+        dispatch(removeOrder(id));
+      }
+    } catch (error) {
+      console.log(error);
     }
-    setTotalAmount(price);
   };
 
-  const deleteOrder = async (id) => {
-    await axios.delete(
-      `${process.env.NEXT_PUBLIC_HOST_NAME}/api/order?orderId=${id}`
-    );
-    getOrders();
+  const buyNow = async () => {
+    try {
+      const res = await axios.post("/api/checkout_session", {
+        items: orders.map((order) => ({
+          price: order.products[0].price_Id,
+          quantity: order.products[0].quantity,
+        })),
+      });
+      router.push(res.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
+
   return (
     <div className={styles.container}>
       <div className={styles.left_div}>
@@ -51,7 +64,7 @@ const Cart = () => {
                 <th>Price</th>
                 <th></th>
               </tr>
-              {userOrders.map((item) => {
+              {orders.map((item) => {
                 return (
                   <tr className={styles.product_row} key={item._id}>
                     <td>
@@ -92,7 +105,7 @@ const Cart = () => {
           <h3 className={styles.title}>Payment</h3>
           <div className={styles.row}>
             <span>Sub Total</span>
-            <span>₹ {totalAmount}</span>
+            <span>₹ {totalPrice}</span>
           </div>
           <div className={styles.row}>
             <span>Discount</span>
@@ -100,10 +113,12 @@ const Cart = () => {
           </div>
           <div className={styles.row}>
             <span>Total</span>
-            <span>₹ {totalAmount - discount}</span>
+            <span>₹ {totalPrice - discount}</span>
           </div>
           <></>
-          <button className={styles.button}>Checkout Now</button>
+          <button className={styles.button} onClick={buyNow}>
+            Checkout Now
+          </button>
         </div>
       </div>
     </div>
@@ -148,16 +163,6 @@ function deliveryFunc() {
       </div>
     </div>
   );
-}
-
-export async function getServerSideProps() {
-  const res = await axios.get(`${process.env.NEXT_PUBLIC_HOST_NAME}api/order`);
-  const orders = res.data;
-  return {
-    props: {
-      orders,
-    }, // will be passed to the page component as props
-  };
 }
 
 export default Cart;

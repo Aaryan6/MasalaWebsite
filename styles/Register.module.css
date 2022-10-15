@@ -53,6 +53,25 @@
 
 @media screen and (max-width: 500px) {
   .container {
-    max-width: 350px;
+    max-width: 300px;
+    margin-top: 3rem;
+  }
+  .logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #ee3f3f;
+  }
+  .form {
+    padding: 10px 5px;
+    width: 100%;
+  }
+  .input {
+    padding: 10px;
+    font-size: 13px;
+    margin: 5px 0;
+  }
+  .button {
+    padding: 10px;
+    font-size: 13px;
   }
 }

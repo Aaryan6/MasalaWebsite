@@ -44,10 +44,26 @@
 .icon_div {
   display: flex;
   align-items: center;
+  position: relative;
+  margin-right: 5px;
 }
 .bag_icon {
   font-size: 20px;
   cursor: pointer;
+}
+.bag_icon_quantity {
+  background: red;
+  color: white;
+  font-size: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  position: absolute;
+  top: -8px;
+  right: -10px;
 }
 .profile_icon {
   font-size: 22px;
@@ -116,6 +132,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: left;
+    z-index: 99;
   }
   .list a {
     margin: 15px 0;
@@ -125,9 +142,11 @@
   }
   .menu_icon {
     display: block;
+    z-index: 50;
   }
   .close_icon {
     display: block;
+    z-index: 100;
   }
   .nav {
     padding: 15px 10px;

@@ -1,6 +1,8 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import styles from "../styles/Navbar.module.css";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { BsHandbag } from "react-icons/bs";
 import { AiOutlineMenu } from "react-icons/ai";
 import { MdClose } from "react-icons/md";
@@ -8,9 +10,11 @@ import { CgProfile } from "react-icons/cg";
 import Modal from "react-modal";
 import Login from "./Login";
 import Register from "./Register";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
+import { addOrder, clearCart, getUser } from "../redux/reduxSlice";
+import jwt from "jsonwebtoken";
+import axios from "axios";
 
 const customStyles = {
   content: {
@@ -27,19 +31,39 @@ const Navbar = () => {
   const [sideBar, setSideBar] = useState(false);
   const [modalIsOpen, setIsOpen] = useState(false);
   const [login, setLogin] = useState(true);
-  const [user, setUser] = useState();
   const [pageName, setPageName] = useState();
   const router = useRouter();
+  const quantity = useSelector((state) => state.order.quantity);
+  const user = useSelector((state) => state.order.user);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    setUser(JSON.parse(localStorage.getItem("masaala_user")));
-    console.log(router.pathname);
     setPageName(router.pathname);
   }, [router]);
 
   useEffect(() => {
-    setUser(JSON.parse(localStorage.getItem("masaala_user")));
+    if (jwt.decode(localStorage.getItem("masaala_user"))) {
+      dispatch(getUser(jwt.decode(localStorage.getItem("masaala_user"))));
+    }
+    getOrders();
   }, []);
+
+  const getOrders = async () => {
+    try {
+      const res = await axios.get(
+        `${process.env.NEXT_PUBLIC_HOST_NAME}/api/order?userId=${
+          jwt.decode(localStorage.getItem("masaala_user"))._id
+        }`
+      );
+      dispatch(clearCart());
+      // add orders from mongodb to redux state
+      res.data.map((order) => {
+        dispatch(addOrder(order));
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   function openModal() {
     if (!user) {
@@ -151,9 +175,10 @@ const Navbar = () => {
         <div className={styles.right}>
           {user ? (
             <Link href="/cart">
-              <span className={styles.icon_div}>
+              <div className={styles.icon_div}>
                 <BsHandbag className={styles.bag_icon} />
-              </span>
+                <div className={styles.bag_icon_quantity}>{quantity}</div>
+              </div>
             </Link>
           ) : (
             <span className={styles.icon_div} onClick={reminderLogin}>

@@ -8,7 +8,9 @@ export default async function handlerOrder(req, res) {
     case "GET":
       let data;
       if (req.query.userId) {
-        data = await Order.find({ userId: req.query.userId });
+        data = await Order.find({ userId: req.query.userId }).sort({
+          updatedAt: -1,
+        });
         res.status(200).json(data);
       } else {
         data = await Order.find();
@@ -27,14 +29,17 @@ export default async function handlerOrder(req, res) {
     case "DELETE":
       try {
         await Order.findOneAndDelete({ _id: req.query.orderId });
-        res.status(200).json({ message: "order deleted" });
+        res.status(200).json({ message: "order deleted", success: true });
       } catch (error) {
         console.log(error);
       }
       break;
     case "PUT":
       try {
-        const prevOrder = await Order.findById(req.params.orderId);
+        const prevOrder = await Order.findOne({ _id: req.query.orderId });
+        if (prevOrder) {
+          await prevOrder.updateOne();
+        }
         res.status(200).json({ message: "order deleted" });
       } catch (error) {
         console.log(error);

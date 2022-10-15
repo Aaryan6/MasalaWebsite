@@ -1,3 +1,4 @@
+import jwt from "jsonwebtoken";
 import dbConnect from "../../dbConnect";
 import User from "../../models/User";
 let CryptoJS = require("crypto-js");
@@ -12,23 +13,27 @@ export default async function handlerUserLogin(req, res) {
       break;
     case "POST":
       try {
+        // find user
         const isUser = await User.findOne({ email: req.body.email });
         if (isUser) {
+          // decrypting password
           let cryptPassword = CryptoJS.AES.decrypt(
             isUser.password,
-            "GUPTCODE123"
+            process.env.NEXT_PUBLIC_PASSWORD_CRYPTO_KEY
           );
-          console.log(cryptPassword);
           let plainPassword = cryptPassword.toString(CryptoJS.enc.Utf8);
-          console.log(plainPassword);
           if (plainPassword == req.body.password) {
+            // send response to client side
             res.status(200).json({
               message: "successfully logged in",
-              user: {
-                _id: isUser._id,
-                name: isUser.name,
-                email: isUser.email,
-              },
+              user_token: jwt.sign(
+                {
+                  _id: isUser._id,
+                  name: isUser.name,
+                  email: isUser.email,
+                },
+                process.env.NEXT_PUBLIC_JWT_TOKEN_KEY
+              ),
               success: true,
             });
           } else {

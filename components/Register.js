@@ -30,7 +30,7 @@ const Register = ({ setLogin, closeModal }) => {
           draggable: true,
           progress: undefined,
         });
-        localStorage.setItem("masaala_user", JSON.stringify(newUser.data.user));
+        localStorage.setItem("masaala_user", newUser.data.user_token);
         closeModal();
         router.reload();
       }
