@@ -1,0 +1,67 @@
+.container {
+  min-height: 100vh;
+}
+.wrapper {
+  display: flex;
+  justify-content: space-around;
+  padding-top: 2rem;
+}
+
+/* orders */
+.orders {
+  flex-basis: 50%;
+}
+.orders table {
+  width: 100%;
+  margin: 3rem 0;
+}
+.product_row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin: 10px 0 20px;
+}
+.product_row th {
+  text-align: center;
+  width: 100%;
+}
+.product_row td {
+  text-align: center;
+  width: 100%;
+}
+
+/* users */
+.users_info {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 40%;
+}
+.user_list {
+  width: 100%;
+  /* background: #000; */
+}
+.users table {
+  width: 100%;
+  margin: 3rem 0;
+}
+.user_row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin: 10px 0 20px;
+}
+.user_row th {
+  text-align: center;
+  width: 120px;
+  background: rgba(25, 57, 106, 0.262);
+  margin: 0 3px;
+}
+.user_row td {
+  background: rgba(26, 86, 177, 0.262);
+  font-size: 14px;
+  margin: 0 3px;
+  width: 120px;
+  word-break: break-all;
+}

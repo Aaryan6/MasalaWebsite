@@ -62,7 +62,7 @@
   flex-direction: column;
   text-align: right;
 }
-.right div span {
+.right div a {
   font-size: 20px;
   margin-bottom: 8px;
 }

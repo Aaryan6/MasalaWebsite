@@ -23,15 +23,15 @@ const Footer = () => {
         <div className={styles.right}>
           <h4>Follow on</h4>
           <div>
-            <span>
+            <a href="https://instagram.com/ak_patlara?igshid=YmMyMTA2M2Y=">
               <BsInstagram />
-            </span>
-            <span>
+            </a>
+            <a href="https://www.facebook.com/akhilesh.patidar.798278">
               <BsFacebook />
-            </span>
-            <span>
+            </a>
+            <a href="https://www.linkedin.com/in/akhilesh-patidar-804619229">
               <BsLinkedin />
-            </span>
+            </a>
           </div>
         </div>
       </div>

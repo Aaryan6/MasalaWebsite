@@ -12,7 +12,7 @@ import Login from "./Login";
 import Register from "./Register";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
-import { addOrder, clearCart, getUser } from "../redux/reduxSlice";
+import { fetchOrder, clearCart, getUser } from "../redux/reduxSlice";
 import jwt from "jsonwebtoken";
 import axios from "axios";
 
@@ -49,17 +49,25 @@ const Navbar = () => {
   }, []);
 
   const getOrders = async () => {
+    let selected_order = 0,
+      i = 0;
     try {
-      const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_HOST_NAME}/api/order?userId=${
+      const orders = await axios.get(
+        `/api/order?userId=${
           jwt.decode(localStorage.getItem("masaala_user"))._id
         }`
       );
-      dispatch(clearCart());
-      // add orders from mongodb to redux state
-      res.data.map((order) => {
-        dispatch(addOrder(order));
-      });
+      if (orders.data.length !== 0) {
+        for (i in orders.data) {
+          // filter pending orders and store it
+          if (orders.data[i].status === "Pending") {
+            selected_order = orders.data[i];
+          }
+        }
+        dispatch(clearCart());
+        // add orders from mongodb to redux state
+        dispatch(fetchOrder(selected_order));
+      }
     } catch (error) {
       console.log(error);
     }

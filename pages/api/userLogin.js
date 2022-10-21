@@ -3,9 +3,8 @@ import dbConnect from "../../dbConnect";
 import User from "../../models/User";
 let CryptoJS = require("crypto-js");
 
-dbConnect();
-
 export default async function handlerUserLogin(req, res) {
+  await dbConnect();
   switch (req.method) {
     case "GET":
       const data = await User.find();

@@ -13,9 +13,11 @@ loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 const ProductComponent = ({ product }) => {
   const router = useRouter();
   const [quantity, setQuantity] = useState(1);
-  const [value, setValue] = useState({
+  const [option, setOption] = useState({
     value: product?.weight[1],
     label: "1 kg - ₹ 240",
+    priceee: 240,
+    price_Id: process.env.NEXT_PUBLIC_PRICE_ID_1KG,
   });
   const dispatch = useDispatch();
   const user = useSelector((state) => state.order.user);
@@ -35,8 +37,18 @@ const ProductComponent = ({ product }) => {
 
   // react-select option
   const options = [
-    { value: product?.weight[1], label: "1 kg - ₹ 240" },
-    { value: product?.weight[0], label: "500 gm - ₹ 120" },
+    {
+      value: product?.weight[1],
+      label: "1 kg - ₹ 240",
+      priceee: 240,
+      price_Id: process.env.NEXT_PUBLIC_PRICE_ID_1KG,
+    },
+    {
+      value: product?.weight[0],
+      label: "500 gm - ₹ 120",
+      priceee: 120,
+      price_Id: process.env.NEXT_PUBLIC_PRICE_ID_500GM,
+    },
   ];
 
   // product quantity
@@ -50,56 +62,106 @@ const ProductComponent = ({ product }) => {
 
   // add order in cart
   const addtoCart = async () => {
-    try {
-      const res = await axios.post("/api/order", {
-        userId: user?._id,
-        products: [
-          {
-            productId: product?._id,
-            productName: product?.name,
-            price: value.value == 1000 ? 2 * product?.price : product?.price,
-            quantity: quantity,
-            weight: value.value,
-            price_Id:
-              value.value == 500
-                ? process.env.NEXT_PUBLIC_PRICE_ID_500GM
-                : process.env.NEXT_PUBLIC_PRICE_ID_1KG,
-          },
-        ],
-        address: "earth",
-        totalPrice:
-          value.value == 500
-            ? quantity * product?.price
-            : quantity * 2 * product?.price,
-      });
-      console.log(res.data);
-      // add order to redux
-      dispatch(addOrder(res.data));
-      router.push("/cart");
-    } catch (err) {
-      console.log(err);
+    let selected_order = 0,
+      i = 0;
+    // get user orders
+    const alreadyOrders = await axios.get(`/api/order?userId=${user?._id}`);
+    console.log("alreadyOrders.data.length " + alreadyOrders.data.length);
+    if (alreadyOrders.data.length !== 0) {
+      for (i in alreadyOrders.data) {
+        // filter pending orders and store it
+        if (alreadyOrders.data[i].status === "Pending") {
+          selected_order = alreadyOrders.data[i]._id;
+        }
+      }
+      // if order is pending then put order in products array
+      // console.log(selected_order);
+      if (selected_order) {
+        try {
+          const updateOrder = await axios.put(
+            `/api/order?orderId=${selected_order}&isPush=true`,
+            {
+              productId: product?._id,
+              productName: product?.name,
+              price: option.priceee,
+              quantity: quantity,
+              weight: option.value,
+              price_Id: option.price_Id,
+              totalPrice: quantity * option.priceee,
+            }
+          );
+          if (updateOrder.data.success) {
+            console.log(updateOrder.data);
+            // dispatch(addOrder(updateOrder.data));
+            router.push("/cart");
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      } else {
+        console.log("sssSomething went wrong!");
+      }
+    } else {
+      try {
+        const postOrder = await axios.post("/api/order", {
+          userId: user?._id,
+          products: [
+            {
+              productId: product?._id,
+              productName: product?.name,
+              price: option.priceee,
+              quantity: quantity,
+              weight: option.value,
+              price_Id: option.price_Id,
+            },
+          ],
+          address: "earth",
+          totalPrice: quantity * option.priceee,
+        });
+        console.log(postOrder.data);
+        // add order to redux
+        router.push("/cart");
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 
   // direct buy product
   const buyNow = async () => {
     try {
-      const res = await axios.post("/api/checkout_session", {
-        items: [
+      const postOrder = await axios.post("/api/order", {
+        userId: user?._id,
+        products: [
           {
-            price:
-              value.value == 500
-                ? process.env.NEXT_PUBLIC_PRICE_ID_500GM
-                : process.env.NEXT_PUBLIC_PRICE_ID_1KG,
+            productId: product?._id,
+            productName: product?.name,
+            price: option.priceee,
             quantity: quantity,
+            weight: option.value,
+            price_Id: option.price_Id,
           },
         ],
+        address: "earth",
+        totalPrice: quantity * option.priceee,
       });
-      router.push(res.data);
+
+      if (postOrder.status == 201) {
+        const res = await axios.post("/api/checkout/checkout_session", {
+          items: [
+            {
+              price: postOrder.data.products[0].price_Id,
+              quantity: postOrder.data.products[0].quantity,
+            },
+          ],
+        });
+        router.push(res.data);
+      }
     } catch (error) {
       console.log(error);
     }
   };
+
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
@@ -111,9 +173,9 @@ const ProductComponent = ({ product }) => {
             className={styles.select_box}
             isSearchable={false}
             placeholder="1 kg - ₹ 240"
-            value={value}
-            onChange={(option) => setValue(option)}
-            instanceId={value.value}
+            value={option}
+            onChange={(option) => setOption(option)}
+            instanceId={option.value}
           />
           <label htmlFor="" className={styles.label}>
             Quantity
@@ -135,10 +197,7 @@ const ProductComponent = ({ product }) => {
             Pakistani curries to create an attractive red colour, it is also
             used in Tandoori and other barbecue marinades.
           </p>
-          <button className={styles.button1} onClick={buyNow}>
-            BUY NOW
-          </button>
-          <button className={styles.button2} onClick={addtoCart}>
+          <button className={styles.button1} onClick={addtoCart}>
             ADD TO CART
           </button>
         </div>

@@ -1,9 +1,8 @@
 import dbConnect from "../../dbConnect";
 import Product from "../../models/Product";
 
-dbConnect();
-
 export default async function handlerProduct(req, res) {
+  await dbConnect();
   switch (req.method) {
     case "GET":
       const data = await Product.find();

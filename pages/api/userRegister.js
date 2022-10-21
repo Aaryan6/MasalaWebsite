@@ -3,9 +3,9 @@ import User from "../../models/User";
 import jwt from "jsonwebtoken";
 let CryptoJS = require("crypto-js");
 
-dbConnect();
-
 export default async function handlerUserRegister(req, res) {
+  await dbConnect();
+
   switch (req.method) {
     case "GET":
       const users = await User.find();

@@ -5,7 +5,7 @@ import { BsCheckCircle } from "react-icons/bs";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { removeOrder } from "../redux/reduxSlice";
+import { clearCart, fetchOrder, removeOrder } from "../redux/reduxSlice";
 
 const Cart = () => {
   const [discount, setDiscount] = useState(0);
@@ -16,20 +16,47 @@ const Cart = () => {
   const user = useSelector((state) => state.order.user);
 
   useEffect(() => {
-    if (user === null) {
-      router.push("/");
-    }
+    // if (user === null) {
+    //   router.push("/");
+    // }
+    console.log(orders);
+    getOrders();
   }, [router]);
 
-  // delete order item from mongodb
-  const deleteOrder = async (id) => {
+  const getOrders = async () => {
+    let selected_order = 0,
+      i = 0;
     try {
-      const del = await axios.delete(
-        `${process.env.NEXT_PUBLIC_HOST_NAME}/api/order?orderId=${id}`
+      const orders = await axios.get(`/api/order?userId=${user?._id}`);
+      if (orders.data.length !== 0) {
+        for (i in orders.data) {
+          // filter pending orders and store it
+          if (orders.data[i].status === "Pending") {
+            selected_order = orders.data[i];
+          }
+        }
+        dispatch(clearCart());
+        // add orders from mongodb to redux state
+        dispatch(fetchOrder(selected_order));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // delete order item from mongodb
+  const deleteOrder = async (order_id, single_order_id, price) => {
+    try {
+      const del = await axios.put(
+        `/api/order?orderId=${order_id}&single_order_id=${single_order_id}&isDelete=true`,
+        {
+          removePrice: price,
+        }
       );
+      console.log(del);
       // delete order from redux state
       if (del.data.success) {
-        dispatch(removeOrder(id));
+        dispatch(removeOrder(single_order_id));
       }
     } catch (error) {
       console.log(error);
@@ -38,11 +65,8 @@ const Cart = () => {
 
   const buyNow = async () => {
     try {
-      const res = await axios.post("/api/checkout_session", {
-        items: orders.map((order) => ({
-          price: order.products[0].price_Id,
-          quantity: order.products[0].quantity,
-        })),
+      const res = await axios.post("/api/checkout/checkout_session", {
+        items: orders,
       });
       router.push(res.data);
     } catch (error) {
@@ -64,7 +88,7 @@ const Cart = () => {
                 <th>Price</th>
                 <th></th>
               </tr>
-              {orders.map((item) => {
+              {orders?.products?.map((item) => {
                 return (
                   <tr className={styles.product_row} key={item._id}>
                     <td>
@@ -76,17 +100,23 @@ const Cart = () => {
                       />
                     </td>
                     <td>
-                      {item.products[0].productName}
+                      {item.productName}
                       <br />
                       {" ("}
-                      {item.products[0].weight == 500 ? "500 gm" : "1 kg"}
+                      {item.weight == 500 ? "500 gm" : "1 kg"}
                       {")"}
                     </td>
-                    <td>{item.products[0].quantity} pack.</td>
-                    <td>₹ {item.totalPrice}</td>
+                    <td>{item.quantity} pack.</td>
+                    <td>₹ {item.price * item.quantity}</td>
                     <td>
                       <button
-                        onClick={() => deleteOrder(item._id)}
+                        onClick={() =>
+                          deleteOrder(
+                            orders._id,
+                            item._id,
+                            item.price * item.quantity
+                          )
+                        }
                         className={styles.cancelButton}
                       >
                         Remove
