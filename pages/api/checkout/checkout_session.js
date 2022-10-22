@@ -1,6 +1,7 @@
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 export default async function handler(req, res) {
+  console.log(req.body.items);
   if (req.method === "POST") {
     try {
       const transformedItems = req.body.items.products.map((item) => ({
@@ -13,9 +14,9 @@ export default async function handler(req, res) {
         mode: "payment",
         payment_method_types: ["card"],
         metadata: {
-          userId: req.body.userId,
-          orderId: req.body._id,
-          address: req.body.address,
+          userId: req.body.items.userId,
+          orderId: req.body.items._id,
+          address: req.body.items.address,
         },
         success_url: `${req.headers.origin}/success?session_id={CHECKOUT_SESSION_ID}`,
         cancel_url: `${req.headers.origin}/?canceled=true`,
