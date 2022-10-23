@@ -18,7 +18,7 @@
   font-weight: 600;
 }
 .list {
-  flex-basis: 50%;
+  flex-basis: 40%;
   display: flex;
   justify-content: space-between;
 }
@@ -114,6 +114,12 @@
 }
 .dropdown_menu span:hover {
   background: rgb(243, 243, 243);
+}
+
+@media screen and (max-width: 800px) {
+  .list {
+    flex-basis: 50%;
+  }
 }
 
 @media screen and (max-width: 500px) {
