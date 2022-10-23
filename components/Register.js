@@ -19,7 +19,6 @@ const Register = ({ setLogin, closeModal }) => {
         number: number,
         password: password,
       });
-      console.log(newUser.data);
       if (newUser.data.success) {
         toast.success("Successfully registered!", {
           position: "top-center",

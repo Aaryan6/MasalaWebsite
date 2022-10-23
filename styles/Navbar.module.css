@@ -18,7 +18,7 @@
   font-weight: 600;
 }
 .list {
-  width: 450px;
+  flex-basis: 50%;
   display: flex;
   justify-content: space-between;
 }

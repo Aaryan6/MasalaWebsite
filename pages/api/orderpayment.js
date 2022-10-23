@@ -6,7 +6,6 @@ export default async function handlerOrderPayment(req, res) {
   switch (req.method) {
     case "PUT":
       try {
-        console.log(req.query);
         const findOrder = await Order.findOne({ _id: req.query.orderId });
         // if order exist then following this process
         if (findOrder) {

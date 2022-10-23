@@ -7,6 +7,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { addOrder } from "../redux/reduxSlice";
+import { toast } from "react-toastify";
 
 loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
@@ -66,7 +67,6 @@ const ProductComponent = ({ product }) => {
       i = 0;
     // get user orders
     const alreadyOrders = await axios.get(`/api/order?userId=${user?._id}`);
-    console.log("alreadyOrders.data.length " + alreadyOrders.data.length);
     if (alreadyOrders.data.length !== 0) {
       for (i in alreadyOrders.data) {
         // filter pending orders and store it
@@ -74,32 +74,27 @@ const ProductComponent = ({ product }) => {
           selected_order = alreadyOrders.data[i]._id;
         }
       }
-      // if order is pending then put order in products array
-      // console.log(selected_order);
-      if (selected_order) {
-        try {
-          const updateOrder = await axios.put(
-            `/api/order?orderId=${selected_order}&isPush=true`,
-            {
-              productId: product?._id,
-              productName: product?.name,
-              price: option.priceee,
-              quantity: quantity,
-              weight: option.value,
-              price_Id: option.price_Id,
-              totalPrice: quantity * option.priceee,
-            }
-          );
-          if (updateOrder.data.success) {
-            console.log(updateOrder.data);
-            // dispatch(addOrder(updateOrder.data));
-            router.push("/cart");
+    }
+    // if order is pending then put order in products array
+    if (selected_order) {
+      try {
+        const updateOrder = await axios.put(
+          `/api/order?orderId=${selected_order}&isPush=true`,
+          {
+            productId: product?._id,
+            productName: product?.name,
+            price: option.priceee,
+            quantity: quantity,
+            weight: option.value,
+            price_Id: option.price_Id,
+            totalPrice: quantity * option.priceee,
           }
-        } catch (err) {
-          console.log(err);
+        );
+        if (updateOrder.data.success) {
+          router.push("/cart");
         }
-      } else {
-        console.log("sssSomething went wrong!");
+      } catch (err) {
+        console.log(err);
       }
     } else {
       try {
@@ -118,7 +113,6 @@ const ProductComponent = ({ product }) => {
           address: "earth",
           totalPrice: quantity * option.priceee,
         });
-        console.log(postOrder.data);
         // add order to redux
         router.push("/cart");
       } catch (err) {
@@ -162,6 +156,18 @@ const ProductComponent = ({ product }) => {
     }
   };
 
+  function reminderLogin() {
+    toast.warning("Please Log in!", {
+      position: "top-center",
+      autoClose: 1500,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
@@ -197,9 +203,15 @@ const ProductComponent = ({ product }) => {
             Pakistani curries to create an attractive red colour, it is also
             used in Tandoori and other barbecue marinades.
           </p>
-          <button className={styles.button1} onClick={addtoCart}>
-            ADD TO CART
-          </button>
+          {user ? (
+            <button className={styles.button1} onClick={addtoCart}>
+              ADD TO CART
+            </button>
+          ) : (
+            <button className={styles.button1} onClick={reminderLogin}>
+              ADD TO CART
+            </button>
+          )}
         </div>
       </div>
     </div>

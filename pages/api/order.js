@@ -8,17 +8,17 @@ export default async function handlerOrder(req, res) {
       let data;
       if (req.query.userId) {
         data = await Order.find({ userId: req.query.userId }).sort({
-          updatedAt: -1,
+          createdAt: -1,
         });
         res.status(200).json(data);
       } else if (req.query.orderId) {
         data = await Order.find({ _id: req.query.orderId }).sort({
-          updatedAt: -1,
+          createdAt: -1,
         });
         res.status(200).json(data);
       } else {
         data = await Order.find().sort({
-          updatedAt: -1,
+          createdAt: -1,
         });
         res.status(200).json(data);
       }
@@ -60,7 +60,6 @@ export default async function handlerOrder(req, res) {
       break;
     case "PUT":
       try {
-        console.log(req.query);
         const findOrder = await Order.findOne({ _id: req.query.orderId });
         // if order exist then following this process
         if (findOrder) {

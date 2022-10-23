@@ -1,7 +1,6 @@
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 export default async function handler(req, res) {
-  console.log(req.body.items);
   if (req.method === "POST") {
     try {
       const transformedItems = req.body.items.products.map((item) => ({

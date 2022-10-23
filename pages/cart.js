@@ -16,10 +16,9 @@ const Cart = () => {
   const user = useSelector((state) => state.order.user);
 
   useEffect(() => {
-    // if (user === null) {
-    //   router.push("/");
-    // }
-    console.log(orders);
+    if (user === null) {
+      router.push("/");
+    }
     getOrders();
   }, [router]);
 
@@ -53,7 +52,6 @@ const Cart = () => {
           removePrice: price,
         }
       );
-      console.log(del);
       // delete order from redux state
       if (del.data.success) {
         dispatch(removeOrder(single_order_id));

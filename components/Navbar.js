@@ -57,7 +57,7 @@ const Navbar = () => {
           jwt.decode(localStorage.getItem("masaala_user"))._id
         }`
       );
-      if (orders.data.length !== 0) {
+      if (orders.data?.length !== 0) {
         for (i in orders.data) {
           // filter pending orders and store it
           if (orders.data[i].status === "Pending") {
